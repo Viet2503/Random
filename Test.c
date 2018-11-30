@@ -33,22 +33,31 @@ void sortieren_nach_kalorien(struct listElement *p_array, int anz) {
         }
     } 
 }
+
+void sortieren_nach_alphabet(struct listElement *p_array, int anz) {
+    for (int i = 0; i < anz - 1; ++i) {
+        for (int j = i + 1; j < anz; ++j) {
+            if (strcmp((p_array + i)->gericht, (p_array + j)->gericht) > 0) {
+                tausche(p_array + i, p_array + j); 
+            }
+        }
+    }
+}
  
 void tausche(struct listElement *firstItem, struct listElement *secondItem) {
  
     struct listElement temp;
     temp.anzahl = firstItem->anzahl;
     temp.k = firstItem->k;
-    strncpy(temp.gericht, firstItem->gericht, 100);
+    strcpy(temp.gericht, firstItem->gericht);
 
     firstItem->anzahl = secondItem->anzahl;
     firstItem->k = secondItem->k;
-    strncpy(firstItem->gericht, secondItem->gericht, 100);
+    strcpy(firstItem->gericht, secondItem->gericht);
 
     secondItem->anzahl = temp.anzahl;
     secondItem->k = temp.k;
-    strncpy(secondItem->gericht, temp.gericht, 100);
-    printf("Successfull swap!\n");
+    strcpy(secondItem->gericht, temp.gericht);
 }
  
 int main() {
@@ -62,9 +71,15 @@ int main() {
         {12, 1024.7, "Fliegenpilz am feinen Rattengift im Schmalzbad"},
         {1, 13.08, "Knoblauchzehe gut gegart an einem Hauch von Panik"},
     };
- 
+    printf("Original:\n");
     ausgabe(&myarray[0], 7);
+
     sortieren_nach_kalorien(&myarray[0], 7);
+    printf("Nach Kalorieren sortiert:\n");
+    ausgabe(&myarray[0], 7);
+
+    sortieren_nach_alphabet(&myarray[0], 7);
+    printf("Nach Alphabet sortiert:\n");
     ausgabe(&myarray[0], 7);
  
     return 0;
